@@ -3,5 +3,5 @@ import query from "../query/query";
 
 export default {
   Query: query,
-  Mutation: mutation
+  Mutation: mutation,
 };
