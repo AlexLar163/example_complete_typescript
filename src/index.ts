@@ -1,7 +1,7 @@
 require("dotenv").config();
 import express from "express";
 import { graphqlHTTP } from "express-graphql";
-import { makeExecutableSchema } from "graphql-tools";
+import { makeExecutableSchema } from "@graphql-tools/schema";
 import { join } from "path";
 import { readFileSync } from "fs";
 import resolvers from "./graphql/resolvers/resolvers";
@@ -15,11 +15,12 @@ const typeDefs = readFileSync(
 
 const schema = makeExecutableSchema({ typeDefs, resolvers });
 
+app.set("PORT", process.env.PORT || 3000);
 app.use(
   "/api",
   graphqlHTTP({ schema: schema, rootValue: resolvers, graphiql: true })
 );
 
-app.listen(3000, () => {
-  console.log("listening on port 3000");
+app.listen(app.get("PORT"), () => {
+  console.log(`Server UP on: http://localhost:${app.get("PORT")}/api`);
 });
